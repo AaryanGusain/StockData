@@ -6,7 +6,7 @@ type CustomResult<T> = Result<T, Box<dyn Error>>;
 #[derive(Debug)]
 pub struct Config {
     tickers: Vec<String>,
-    days: Option<usize>,
+    days: usize,
 }
 
 pub fn parse_int(value: &str) -> CustomResult<usize> {
@@ -47,11 +47,16 @@ pub fn get_args() -> CustomResult<Config> {
 
     let mut number_days: usize = 10;
     if number_days_flag {
-        let input_number_string: String = matches.remove_one("number_days").unwrap();
+        let input_string: String = matches.remove_one("number_days").unwrap();
+        let input_number_days = parse_int(&input_string);
+        match input_number_days {
+            Ok(number) => number_days = number,
+            Err(e) => return Err(e).map_err(|e| format!("invalid day count -- {}", e))?,
+        }
     }
 
     Ok(Config {
-        tickers: vec![],
-        days: Some(10),
+        tickers: tickers_vec,
+        days: number_days,
     })
 }

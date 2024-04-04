@@ -9,6 +9,13 @@ pub struct Config {
     days: Option<usize>,
 }
 
+pub fn parse_int(value: &str) -> CustomResult<usize> {
+    match value.parse() {
+        Ok(number) if number > 0 => Ok(number),
+        _ => Err(From::from(value)),
+    }
+}
+
 pub fn get_args() -> CustomResult<Config> {
     let mut matches = Command::new("rusty_stocks")
         .version("0.1.0")
@@ -31,5 +38,20 @@ pub fn get_args() -> CustomResult<Config> {
         )
         .get_matches();
 
-    Ok(())
+    let tickers_vec: Vec<String> = matches.remove_many("tickers").unwrap().collect();
+
+    let number_days_flag = matches!(
+        matches.value_source("number_days").unwrap(),
+        ValueSource::CommandLine
+    );
+
+    let mut number_days: usize = 10;
+    if number_days_flag {
+        let input_number_string: String = matches.remove_one("number_days").unwrap();
+    }
+
+    Ok(Config {
+        tickers: vec![],
+        days: Some(10),
+    })
 }

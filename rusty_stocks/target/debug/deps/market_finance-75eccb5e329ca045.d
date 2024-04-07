@@ -1,9 +1,0 @@
-/Users/derekwarner/repos/cs128H/CS128_project/rusty_stocks/target/debug/deps/libmarket_finance-75eccb5e329ca045.rmeta: /Users/derekwarner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/market-finance-0.3.0/src/lib.rs /Users/derekwarner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/market-finance-0.3.0/src/traits.rs /Users/derekwarner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/market-finance-0.3.0/src/interval.rs /Users/derekwarner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/market-finance-0.3.0/src/bar.rs /Users/derekwarner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/market-finance-0.3.0/src/quote.rs
-
-/Users/derekwarner/repos/cs128H/CS128_project/rusty_stocks/target/debug/deps/market_finance-75eccb5e329ca045.d: /Users/derekwarner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/market-finance-0.3.0/src/lib.rs /Users/derekwarner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/market-finance-0.3.0/src/traits.rs /Users/derekwarner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/market-finance-0.3.0/src/interval.rs /Users/derekwarner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/market-finance-0.3.0/src/bar.rs /Users/derekwarner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/market-finance-0.3.0/src/quote.rs
-
-/Users/derekwarner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/market-finance-0.3.0/src/lib.rs:
-/Users/derekwarner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/market-finance-0.3.0/src/traits.rs:
-/Users/derekwarner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/market-finance-0.3.0/src/interval.rs:
-/Users/derekwarner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/market-finance-0.3.0/src/bar.rs:
-/Users/derekwarner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/market-finance-0.3.0/src/quote.rs:

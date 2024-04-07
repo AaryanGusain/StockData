@@ -1,5 +1,8 @@
-pub mod fetcher;
+pub mod calculations;
 
 fn main() {
-    println!("hello wold0");
+    if let Err(e) = rusty_stocks::get_args().and_then(rusty_stocks::run) {
+        eprintln!("{}", e);
+        std::process::exit(1);
+    }
 }

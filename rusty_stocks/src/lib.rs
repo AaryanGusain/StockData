@@ -1,12 +1,27 @@
 use clap::{parser::ValueSource, Arg, Command};
-use std::error::Error;
+use std::{
+    error::Error,
+    fs::File,
+    io::{self, BufRead, BufReader},
+};
 
 type CustomResult<T> = Result<T, Box<dyn Error>>;
 
 #[derive(Debug)]
 pub struct Config {
-    tickers: Vec<String>,
+    files: Vec<String>,
     days: usize,
+}
+
+pub fn run(config: Config) -> CustomResult<()> {
+    for filename in config.files {
+        match open_file(&filename) {
+            Err(e) => eprintln!("{}: {}", filename, e),
+            Ok(_) => println!("{} Successfully Opened", filename),
+        }
+    }
+
+    Ok(())
 }
 
 pub fn parse_int(value: &str) -> CustomResult<usize> {
@@ -16,14 +31,21 @@ pub fn parse_int(value: &str) -> CustomResult<usize> {
     }
 }
 
+fn open_file(filename: &str) -> CustomResult<Box<dyn BufRead>> {
+    match filename {
+        "-" => Ok(Box::new(BufReader::new(io::stdin()))),
+        _ => Ok(Box::new(BufReader::new(File::open(filename)?))),
+    }
+}
+
 pub fn get_args() -> CustomResult<Config> {
     let mut matches = Command::new("rusty_stocks")
         .version("0.1.0")
         .author("Derek Warner <derekw3@illinois.edu>, Chengxun Ren <cren8@illinois.edu>, Haozhe Chen <haozhe6@illinois.edu>, Aaryan Singh Gusain <agusain2@illinois.edu>")
         .about("A CLI stock prediction application")
         .arg(
-            Arg::new("tickers")
-                .help("Stock Ticker(s)")
+            Arg::new("files")
+                .help("Input File(s)")
                 .default_value("-")
                 .num_args(1..),
         )
@@ -38,7 +60,7 @@ pub fn get_args() -> CustomResult<Config> {
         )
         .get_matches();
 
-    let tickers_vec: Vec<String> = matches.remove_many("tickers").unwrap().collect();
+    let files_vec: Vec<String> = matches.remove_many("files").unwrap().collect();
 
     let number_days_flag = matches!(
         matches.value_source("number_days").unwrap(),
@@ -56,7 +78,7 @@ pub fn get_args() -> CustomResult<Config> {
     }
 
     Ok(Config {
-        tickers: tickers_vec,
+        files: files_vec,
         days: number_days,
     })
 }

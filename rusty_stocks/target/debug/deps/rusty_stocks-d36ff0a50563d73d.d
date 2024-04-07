@@ -1,8 +1,9 @@
-/Users/derekwarner/repos/cs128H/CS128_project/rusty_stocks/target/debug/deps/librusty_stocks-d36ff0a50563d73d.rmeta: src/main.rs Cargo.toml
+/Users/derekwarner/repos/cs128H/CS128_project/rusty_stocks/target/debug/deps/librusty_stocks-d36ff0a50563d73d.rmeta: src/main.rs src/fetcher.rs Cargo.toml
 
-/Users/derekwarner/repos/cs128H/CS128_project/rusty_stocks/target/debug/deps/rusty_stocks-d36ff0a50563d73d.d: src/main.rs Cargo.toml
+/Users/derekwarner/repos/cs128H/CS128_project/rusty_stocks/target/debug/deps/rusty_stocks-d36ff0a50563d73d.d: src/main.rs src/fetcher.rs Cargo.toml
 
 src/main.rs:
+src/fetcher.rs:
 Cargo.toml:
 
 # env-dep:CLIPPY_ARGS=

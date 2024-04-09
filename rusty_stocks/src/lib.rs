@@ -31,9 +31,31 @@ pub fn run(config: Config) -> CustomResult<()> {
             Ok(file) => {
                 println!("{} Successfully Opened! Parsing Data...", filename);
 
+                let mut stock_vec: Vec<Stock> = Vec::new();
+
                 for (line_number, line) in file.lines().enumerate() {
                     if line_number == 0 {
                         continue;
+                    }
+                    let line: String = match line {
+                        Ok(valid_line) => valid_line,
+                        Err(_) => String::from(""),
+                    };
+
+                    if line.is_empty() {
+                        continue;
+                    } else {
+                        let line_vec: Vec<&str> = line.split(',').collect();
+                        let stock: Stock = Stock {
+                            date: String::from(line_vec[0]),
+                            open: line_vec[1].parse().unwrap(),
+                            high: line_vec[2].parse().unwrap(),
+                            low: line_vec[3].parse().unwrap(),
+                            close: line_vec[4].parse().unwrap(),
+                            adj_close: line_vec[5].parse().unwrap(),
+                            volume: line_vec[6].parse().unwrap(),
+                        };
+                        stock_vec.push(stock);
                     }
                 }
             }

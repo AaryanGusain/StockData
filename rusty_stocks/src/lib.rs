@@ -13,11 +13,30 @@ pub struct Config {
     days: usize,
 }
 
+#[derive(Debug)]
+pub struct Stock {
+    date: String,
+    open: f32,
+    high: f32,
+    low: f32,
+    close: f32,
+    adj_close: f32,
+    volume: usize,
+}
+
 pub fn run(config: Config) -> CustomResult<()> {
     for filename in config.files {
         match open_file(&filename) {
             Err(e) => eprintln!("{}: {}", filename, e),
-            Ok(_) => println!("{} Successfully Opened", filename),
+            Ok(file) => {
+                println!("{} Successfully Opened! Parsing Data...", filename);
+
+                for (line_number, line) in file.lines().enumerate() {
+                    if line_number == 0 {
+                        continue;
+                    }
+                }
+            }
         }
     }
 
@@ -56,7 +75,7 @@ pub fn get_args() -> CustomResult<Config> {
                 .value_name("DAYS")
                 .help("Number of days to predict")
                 .num_args(1)
-                .default_value("10"),   
+                .default_value("10"),
         )
         .get_matches();
 

@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 clap = "4"
 ndarray = "0"
+randomforest = "0"

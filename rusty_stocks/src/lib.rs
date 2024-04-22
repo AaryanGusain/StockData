@@ -1,3 +1,6 @@
+pub mod calculations;
+pub mod stock;
+
 use clap::{parser::ValueSource, Arg, Command};
 use std::{
     error::Error,
@@ -5,35 +8,14 @@ use std::{
     io::{self, BufRead, BufReader},
 };
 
+use crate::stock::Stock;
+
 type CustomResult<T> = Result<T, Box<dyn Error>>;
 
 #[derive(Debug)]
 pub struct Config {
     files: Vec<String>,
     days: usize,
-}
-#[derive(Debug)]
-pub struct Stock {
-    date: String,
-    open: f32,
-    high: f32,
-    low: f32,
-    close: f32,
-    adj_close: f32,
-    volume: usize,
-}
-
-impl Stock {
-    fn get_array(&self) -> [f32; 6] {
-        [
-            self.open,
-            self.high,
-            self.low,
-            self.close,
-            self.adj_close,
-            self.volume as f32,
-        ]
-    }
 }
 
 pub fn run(config: Config) -> CustomResult<()> {

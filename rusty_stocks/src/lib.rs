@@ -40,15 +40,15 @@ pub fn run(config: Config) -> CustomResult<()> {
                         continue;
                     } else {
                         let line_vec: Vec<&str> = line.split(',').collect();
-                        let stock: Stock = Stock {
-                            date: String::from(line_vec[0]),
-                            open: line_vec[1].parse().unwrap(),
-                            high: line_vec[2].parse().unwrap(),
-                            low: line_vec[3].parse().unwrap(),
-                            close: line_vec[4].parse().unwrap(),
-                            adj_close: line_vec[5].parse().unwrap(),
-                            volume: line_vec[6].parse().unwrap(),
-                        };
+                        let stock: Stock = Stock::new(
+                            String::from(line_vec[0]),
+                            line_vec[1].parse().unwrap(),
+                            line_vec[2].parse().unwrap(),
+                            line_vec[3].parse().unwrap(),
+                            line_vec[4].parse().unwrap(),
+                            line_vec[5].parse().unwrap(),
+                            line_vec[6].parse().unwrap(),
+                        );
                         stock_vec.push(stock);
                     }
                 }

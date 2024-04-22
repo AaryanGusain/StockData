@@ -10,7 +10,6 @@ type CustomResult<T> = Result<T, Box<dyn Error>>;
 #[derive(Debug)]
 pub struct Config {
     files: Vec<String>,
-    days: usize,
 }
 #[derive(Debug)]
 pub struct Stock {
@@ -21,6 +20,19 @@ pub struct Stock {
     close: f32,
     adj_close: f32,
     volume: usize,
+}
+
+impl Stock {
+    fn get_array(&self) -> [f32; 6] {
+        [
+            self.open,
+            self.high,
+            self.low,
+            self.close,
+            self.adj_close,
+            self.volume as f32,
+        ]
+    }
 }
 
 pub fn run(config: Config) -> CustomResult<()> {

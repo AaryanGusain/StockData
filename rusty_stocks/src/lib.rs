@@ -12,7 +12,6 @@ pub struct Config {
     files: Vec<String>,
     days: usize,
 }
-
 #[derive(Debug)]
 pub struct Stock {
     date: String,

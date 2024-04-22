@@ -10,6 +10,7 @@ type CustomResult<T> = Result<T, Box<dyn Error>>;
 #[derive(Debug)]
 pub struct Config {
     files: Vec<String>,
+    days: usize,
 }
 #[derive(Debug)]
 pub struct Stock {

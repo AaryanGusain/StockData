@@ -1,14 +1,15 @@
-pub mod calculations;
-pub mod stock;
-
-use clap::{parser::ValueSource, Arg, Command};
 use std::{
     error::Error,
     fs::File,
     io::{self, BufRead, BufReader},
 };
 
+use clap::{Arg, Command, parser::ValueSource};
+
 use crate::stock::Stock;
+
+pub mod calculations;
+pub mod stock;
 
 type CustomResult<T> = Result<T, Box<dyn Error>>;
 
@@ -31,10 +32,7 @@ pub fn run(config: Config) -> CustomResult<()> {
                     if line_number == 0 {
                         continue;
                     }
-                    let line: String = match line {
-                        Ok(valid_line) => valid_line,
-                        Err(_) => String::from(""),
-                    };
+                    let line: String = line.unwrap_or_else(|_| String::from(""));
 
                     if line.is_empty() {
                         continue;

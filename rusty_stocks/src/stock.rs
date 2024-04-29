@@ -52,7 +52,11 @@ impl Stock {
         ]
     }
 
-    pub fn get_close(&self) -> f64 {
-        self.close
+    pub fn get_label(&self) -> f64 {
+        if self.close > self.open {
+            1.0
+        } else {
+            0.0
+        }
     }
 }

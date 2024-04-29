@@ -3,11 +3,11 @@ use core::fmt;
 #[derive(Debug)]
 pub struct Stock {
     date: String,
-    open: f32,
-    high: f32,
-    low: f32,
-    close: f32,
-    adj_close: f32,
+    open: f64,
+    high: f64,
+    low: f64,
+    close: f64,
+    adj_close: f64,
     volume: usize,
 }
 
@@ -24,11 +24,11 @@ impl fmt::Display for Stock {
 impl Stock {
     pub fn new(
         date: String,
-        open: f32,
-        high: f32,
-        low: f32,
-        close: f32,
-        adj_close: f32,
+        open: f64,
+        high: f64,
+        low: f64,
+        close: f64,
+        adj_close: f64,
         volume: usize,
     ) -> Self {
         Self {
@@ -42,14 +42,17 @@ impl Stock {
         }
     }
 
-    pub fn get_array(&self) -> [f32; 6] {
+    pub fn get_array(&self) -> [f64; 5] {
         [
             self.open,
             self.high,
             self.low,
-            self.close,
             self.adj_close,
-            self.volume as f32,
+            self.volume as f64,
         ]
+    }
+
+    pub fn get_close(&self) -> f64 {
+        self.close
     }
 }

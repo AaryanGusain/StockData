@@ -1,3 +1,5 @@
+use std::num::{NonZeroI32, NonZeroUsize};
+
 use crate::stock::Stock;
 use rand::seq::SliceRandom;
 use randomforest::criterion::Gini;
@@ -64,7 +66,9 @@ pub fn run_forest(stocks: Vec<Stock>) -> (f64, f32) {
 
     let table: Table = table_builder.build().unwrap();
 
-    let classifier: RandomForestClassifier = RandomForestClassifierOptions::new().fit(Gini, table);
+    let classifier: RandomForestClassifier = RandomForestClassifierOptions::new()
+        .trees(NonZeroUsize::new(300).unwrap())
+        .fit(Gini, table);
 
     let num_tests: f32 = test_set.len() as f32;
     let mut num_correct: f32 = 0.0;

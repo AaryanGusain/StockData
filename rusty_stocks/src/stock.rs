@@ -108,6 +108,11 @@ impl Stock {
         self.close
     }
 
+    /*
+        Simple setter for tomorrow attribute used in determining the label of an already determined stock
+
+        @param (&mut self) current stock object
+    */
     pub fn set_tomorrow(&mut self, tomorrow: Tomorrow) {
         self.tomorrow = tomorrow;
     }

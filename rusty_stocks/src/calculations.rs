@@ -80,6 +80,7 @@ pub fn run_forest(stocks: Vec<Stock>) -> (f64, f32) {
     let mut accuracy = num_correct / num_tests;
     let mut switch_flag: bool = false;
 
+    // if the accuracy is less than 50% it is actually useful to do the opposite of what the model says
     if accuracy < 0.5 {
         accuracy = 1.0 - accuracy;
         switch_flag = true;

@@ -21,6 +21,13 @@ pub struct Config {
     days: usize,
 }
 
+/*
+    Attempt to open passed files and then parse them into stock objects, passing it to the desired method of prediction
+
+    @param (config: Config) config object constructed by the get_args function
+
+    @return (CustomResult()) custom result object which indicates that the function has finished
+*/
 pub fn run(config: Config) -> CustomResult<()> {
     for filename in config.files {
         match open_file(&filename) {

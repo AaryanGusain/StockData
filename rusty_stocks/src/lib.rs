@@ -109,7 +109,7 @@ pub fn parse_int(value: &str) -> CustomResult<usize> {
 
     @param (filename: &str) relative file path which is used to open the stock data file
 
-    @return (CustomResult<Box<dyn BufRead>>) BufRead object used to read the passed file
+    @return (CustomResult<Box<dyn BufRead>>) CustomResult containing BufRead object used to read the passed file
 */
 fn open_file(filename: &str) -> CustomResult<Box<dyn BufRead>> {
     match filename {
@@ -118,6 +118,11 @@ fn open_file(filename: &str) -> CustomResult<Box<dyn BufRead>> {
     }
 }
 
+/*
+    Parses the command line argument including the filepaths and the number of prediction days
+
+    @return (CustomResult<Config>) CustomResult containing Config object holding passed arguments
+*/
 pub fn get_args() -> CustomResult<Config> {
     let mut matches = Command::new("rusty_stocks")
         .version("0.1.0")

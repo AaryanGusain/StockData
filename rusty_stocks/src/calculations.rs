@@ -47,6 +47,13 @@ pub fn split_data(stocks: &[Stock], training: f32) -> (Vec<Stock>, Vec<Stock>) {
     (training_set, test_set)
 }
 
+/*
+    Builds the random forest and predicts if it will increase or decrease between today and tomorrow
+
+    @param (stocks: Vec<Stock>) vector of Stock objects parsed from the input file
+
+    @return (f64, f32) the predicted result and accuracy respectively
+*/
 pub fn run_forest(stocks: Vec<Stock>) -> (f64, f32) {
     let ultimo: Stock = stocks[stocks.len() - 1].clone();
     let dataset: Vec<Stock> = stocks[0..stocks.len() - 1].to_vec();

@@ -1,13 +1,17 @@
-use std::intrinsics::floorf32;
-
-use crate::stock::{self, Stock};
-
-use clap::Error;
+use crate::stock::Stock;
 use rand::seq::SliceRandom;
 use randomforest::criterion::Mse;
 use randomforest::table::{Table, TableBuilder, TableError};
 use randomforest::RandomForestRegressorOptions;
 
+/*
+    Constructs a randomforest crate TableBuilder which holds the stock data from
+    the passed stock struct vector
+
+    @param (stocks: &Vec<Stock>) vector of stock structs containing training dataset
+
+    @return (TableBuilder) TableBuilder object with stock data inserted
+*/
 pub fn construct_table(stocks: &Vec<Stock>) -> TableBuilder {
     let mut table_builder: TableBuilder = TableBuilder::new();
 

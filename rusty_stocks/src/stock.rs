@@ -72,6 +72,14 @@ impl Stock {
         }
     }
 
+    pub fn get_open(&self) -> f64 {
+        self.open
+    }
+
+    pub fn get_close(&self) -> f64 {
+        self.close
+    }
+
     pub fn set_tomorrow(&mut self, tomorrow: Tomorrow) {
         self.tomorrow = tomorrow;
     }

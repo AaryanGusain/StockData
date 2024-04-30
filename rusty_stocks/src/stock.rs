@@ -71,6 +71,13 @@ impl Stock {
         ]
     }
 
+    /*
+        Returns the label (increasing or decreasing) of the current stock object
+
+        @param (&self) current stock object
+
+        @return (f64) 1 for increasing, 0 for decreasing, -1 in the case this should not be read
+    */
     pub fn get_label(&self) -> f64 {
         match self.tomorrow {
             Tomorrow::Increase => 1.0,

@@ -63,9 +63,7 @@ pub fn run(config: Config) -> CustomResult<()> {
                     }
                 }
 
-                for stock in stock_vec {
-                    println!("{:?}", stock);
-                }
+                
             }
         }
     }

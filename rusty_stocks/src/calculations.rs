@@ -1,8 +1,8 @@
 use crate::stock::Stock;
 use rand::seq::SliceRandom;
-use randomforest::criterion::Mse;
-use randomforest::table::{Table, TableBuilder, TableError};
-use randomforest::RandomForestRegressorOptions;
+use randomforest::criterion::Gini;
+use randomforest::table::{Table, TableBuilder};
+use randomforest::{RandomForestClassifier, RandomForestClassifierOptions};
 
 /*
     Constructs a randomforest crate TableBuilder which holds the stock data from
@@ -45,4 +45,46 @@ pub fn split_data(stocks: &[Stock], training: f32) -> (Vec<Stock>, Vec<Stock>) {
     }
 
     (training_set, test_set)
+}
+
+pub fn run_forest(stocks: Vec<Stock>) -> f64 {
+    let ultimo: Stock = stocks[stocks.len() - 1].clone();
+    let dataset: Vec<Stock> = stocks[0..stocks.len()].to_vec();
+
+    let (training_set, test_set) = split_data(&dataset, 0.8);
+
+    let table_builder: TableBuilder = construct_table(&training_set);
+
+    let table: Table = table_builder.build().unwrap();
+
+    let classifier: RandomForestClassifier = RandomForestClassifierOptions::new().fit(Gini, table);
+
+    let num_tests: f32 = test_set.len() as f32;
+    let mut num_correct: f32 = 0.0;
+
+    for stock in test_set {
+        let result = classifier.predict(&stock.get_array());
+
+        if result == stock.get_label() {
+            num_correct += 1.0;
+        }
+    }
+
+    let mut accuracy = num_correct / num_tests;
+    let mut switch_flag: bool = false;
+
+    if accuracy < 0.5 {
+        accuracy = 1.0 - accuracy;
+        switch_flag = true;
+    }
+
+    println!("Model achieved an accuracy of {}%", accuracy);
+
+    let mut result = classifier.predict(&ultimo.get_array());
+
+    if switch_flag {
+        result *= -1.0;
+    }
+
+    result
 }

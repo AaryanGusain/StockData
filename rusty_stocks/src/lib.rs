@@ -104,7 +104,13 @@ pub fn parse_int(value: &str) -> CustomResult<usize> {
     }
 }
 
+/*
+    Opens a passed file which is in respect to the current working directory
 
+    @param (filename: &str) relative file path which is used to open the stock data file
+
+    @return (CustomResult<Box<dyn BufRead>>) BufRead object used to read the passed file
+*/
 fn open_file(filename: &str) -> CustomResult<Box<dyn BufRead>> {
     match filename {
         "-" => Ok(Box::new(BufReader::new(io::stdin()))),

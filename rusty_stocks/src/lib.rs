@@ -1,4 +1,5 @@
 use std::{
+    borrow::BorrowMut,
     error::Error,
     fs::File,
     io::{self, BufRead, BufReader},
@@ -53,12 +54,17 @@ pub fn run(config: Config) -> CustomResult<()> {
                     }
                 }
 
-                for (stock_number, stock) in stock_vec.iter().enumerate() {
-                    if stock_number == stock_vec.len() - 1 {
-                        break;
+                let length = stock_vec.len();
+                for i in 0..(length - 1) {
+                    if stock_vec[i].get_close() <= stock_vec[i + 1].get_close() {
+                        stock_vec[i].set_tomorrow(Tomorrow::Increase);
                     } else {
-                        
+                        stock_vec[i].set_tomorrow(Tomorrow::Decrease);
                     }
+                }
+
+                for stock in stock_vec {
+                    println!("{:?}", stock);
                 }
             }
         }

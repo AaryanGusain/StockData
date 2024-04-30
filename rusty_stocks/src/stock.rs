@@ -97,7 +97,13 @@ impl Stock {
         self.open
     }
 
-    
+    /*
+        Simple getter for close attribute used in determining the label of an already determined stock
+
+        @param (&self) current stock object
+
+        @return (f64) close attribute
+    */
     pub fn get_close(&self) -> f64 {
         self.close
     }

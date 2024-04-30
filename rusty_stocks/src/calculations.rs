@@ -14,3 +14,7 @@ pub fn construct_table(stocks: &Vec<Stock>) -> TableBuilder {
 
     table_builder
 }
+
+fn split_data(stocks: &Vec<Stock>) -> (Vec<Stock>, Vec<Stock>) {
+    
+}

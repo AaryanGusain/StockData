@@ -1,4 +1,4 @@
-use std::num::{NonZeroI32, NonZeroUsize};
+use std::num::NonZeroUsize;
 
 use crate::stock::Stock;
 use rand::seq::SliceRandom;
@@ -60,7 +60,7 @@ pub fn run_forest(stocks: Vec<Stock>) -> (f64, f32) {
     let ultimo: Stock = stocks[stocks.len() - 1].clone();
     let dataset: Vec<Stock> = stocks[0..stocks.len() - 1].to_vec();
 
-    let (training_set, test_set) = split_data(&dataset, 0.8);
+    let (training_set, test_set) = split_data(&dataset, 0.9);
 
     let table_builder: TableBuilder = construct_table(&training_set);
 

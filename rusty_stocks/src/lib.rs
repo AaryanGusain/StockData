@@ -1,5 +1,4 @@
 use std::{
-    borrow::BorrowMut,
     error::Error,
     fs::File,
     io::{self, BufRead, BufReader},
@@ -7,6 +6,7 @@ use std::{
 
 use clap::{parser::ValueSource, Arg, Command};
 
+use crate::calculations::run_forest;
 use crate::stock::Stock;
 use crate::stock::Tomorrow;
 
@@ -63,7 +63,19 @@ pub fn run(config: Config) -> CustomResult<()> {
                     }
                 }
 
-                
+                let (result, accuracy) = run_forest(stock_vec);
+
+                if result == 1.0 {
+                    println!(
+                        "The stock is predicted to increase with an accuracy of {}!",
+                        accuracy
+                    );
+                } else {
+                    println!(
+                        "The stock is predicted to decrease with an accuracy of {}!",
+                        accuracy
+                    );
+                }
             }
         }
     }

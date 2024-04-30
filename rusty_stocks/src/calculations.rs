@@ -47,9 +47,9 @@ pub fn split_data(stocks: &[Stock], training: f32) -> (Vec<Stock>, Vec<Stock>) {
     (training_set, test_set)
 }
 
-pub fn run_forest(stocks: Vec<Stock>) -> f64 {
+pub fn run_forest(stocks: Vec<Stock>) -> (f64, f32) {
     let ultimo: Stock = stocks[stocks.len() - 1].clone();
-    let dataset: Vec<Stock> = stocks[0..stocks.len()].to_vec();
+    let dataset: Vec<Stock> = stocks[0..stocks.len() - 1].to_vec();
 
     let (training_set, test_set) = split_data(&dataset, 0.8);
 
@@ -78,13 +78,11 @@ pub fn run_forest(stocks: Vec<Stock>) -> f64 {
         switch_flag = true;
     }
 
-    println!("Model achieved an accuracy of {}%", accuracy);
-
     let mut result = classifier.predict(&ultimo.get_array());
 
     if switch_flag {
-        result *= -1.0;
+        result = if result == 1.0 { 0.0 } else { 1.0 };
     }
 
-    result
+    (result, accuracy)
 }

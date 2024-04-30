@@ -67,8 +67,8 @@ impl Stock {
     pub fn get_label(&self) -> f64 {
         match self.tomorrow {
             Tomorrow::Increase => 1.0,
-            Tomorrow::Decrease => -1.0,
-            Tomorrow::Predict => 0.0,
+            Tomorrow::Decrease => 0.0,
+            Tomorrow::Predict => -1.0,
         }
     }
 

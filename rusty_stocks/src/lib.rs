@@ -4,9 +4,10 @@ use std::{
     io::{self, BufRead, BufReader},
 };
 
-use clap::{Arg, Command, parser::ValueSource};
+use clap::{parser::ValueSource, Arg, Command};
 
 use crate::stock::Stock;
+use crate::stock::Tomorrow;
 
 pub mod calculations;
 pub mod stock;
@@ -46,8 +47,17 @@ pub fn run(config: Config) -> CustomResult<()> {
                             line_vec[4].parse().unwrap(),
                             line_vec[5].parse().unwrap(),
                             line_vec[6].parse().unwrap(),
+                            Tomorrow::Predict,
                         );
                         stock_vec.push(stock);
+                    }
+                }
+
+                for (stock_number, stock) in stock_vec.iter().enumerate() {
+                    if stock_number == stock_vec.len() - 1 {
+                        break;
+                    } else {
+                        
                     }
                 }
             }

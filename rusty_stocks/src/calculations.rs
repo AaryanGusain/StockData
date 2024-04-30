@@ -23,14 +23,14 @@ pub fn construct_table(stocks: &Vec<Stock>) -> TableBuilder {
 }
 
 /*
-    Splits stocks into two sets, training and testing for cross referencing testing
+    Splits stocks into two sets, training and testing for cross reference testing
 
     @param (stocks: &Vec<stock>) vector of stock structs parsed from file
     @param (training: f32) fraction of dataset to be in the training set
 
     @return (Vec<Stock>, Vec<Stock) partitioned training and testing datasets respectively
 */
-fn split_data(stocks: &[Stock], training: f32) -> (Vec<Stock>, Vec<Stock>) {
+pub fn split_data(stocks: &[Stock], training: f32) -> (Vec<Stock>, Vec<Stock>) {
     let mut indices: Vec<usize> = (0..stocks.len()).collect();
     indices.shuffle(&mut rand::thread_rng());
     let training_index: usize = (training * (stocks.len() as f32)) as usize;

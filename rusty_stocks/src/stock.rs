@@ -1,6 +1,13 @@
 use core::fmt;
 
 #[derive(Debug, Clone)]
+pub enum Tomorrow {
+    Increase,
+    Decrease,
+    Predict,
+}
+
+#[derive(Debug, Clone)]
 pub struct Stock {
     date: String,
     open: f64,
@@ -9,6 +16,7 @@ pub struct Stock {
     close: f64,
     adj_close: f64,
     volume: usize,
+    tomorrow: Tomorrow,
 }
 
 impl fmt::Display for Stock {
@@ -22,6 +30,7 @@ impl fmt::Display for Stock {
 }
 
 impl Stock {
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         date: String,
         open: f64,
@@ -30,6 +39,7 @@ impl Stock {
         close: f64,
         adj_close: f64,
         volume: usize,
+        tomorrow: Tomorrow,
     ) -> Self {
         Self {
             date,
@@ -39,24 +49,30 @@ impl Stock {
             close,
             adj_close,
             volume,
+            tomorrow,
         }
     }
 
-    pub fn get_array(&self) -> [f64; 5] {
+    pub fn get_array(&self) -> [f64; 6] {
         [
             self.open,
             self.high,
             self.low,
             self.adj_close,
+            self.close,
             self.volume as f64,
         ]
     }
 
     pub fn get_label(&self) -> f64 {
-        if self.close > self.open {
-            1.0
-        } else {
-            0.0
+        match self.tomorrow {
+            Tomorrow::Increase => 1.0,
+            Tomorrow::Decrease => -1.0,
+            Tomorrow::Predict => 0.0,
         }
+    }
+
+    pub fn set_tomorrow(&mut self, tomorrow: Tomorrow) {
+        self.tomorrow = tomorrow;
     }
 }

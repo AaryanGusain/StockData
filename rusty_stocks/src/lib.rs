@@ -90,12 +90,20 @@ pub fn run(config: Config) -> CustomResult<()> {
     Ok(())
 }
 
+/*
+    Parses an int from a string slice, used for parsing the number of days
+
+    @param (value: &str) string slice containing the string to be parsed
+
+    @return (CustomResult<usize>) custom result object which can contain the usize result of parsing the string
+*/
 pub fn parse_int(value: &str) -> CustomResult<usize> {
     match value.parse() {
         Ok(number) if number > 0 => Ok(number),
         _ => Err(From::from(value)),
     }
 }
+
 
 fn open_file(filename: &str) -> CustomResult<Box<dyn BufRead>> {
     match filename {

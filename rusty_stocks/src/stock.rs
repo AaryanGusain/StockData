@@ -53,6 +53,13 @@ impl Stock {
         }
     }
 
+    /*
+        Returns array of stock data used as the features of the random forest
+
+        @param (&self) current stock object
+
+        @return ([f64; 6]) array of length six holding the open, high, low, adj_close, close and volume data
+    */
     pub fn get_array(&self) -> [f64; 6] {
         [
             self.open,

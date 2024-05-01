@@ -121,6 +121,13 @@ impl Stock {
         (self.high + self.close) / 2.0
     }
 
+    /*
+        Simple getter to get the logarithmic return
+
+        @param (&self) current stock object
+
+        @return (f64) logarithmic return of current stock object
+    */
     pub fn get_return(&self) -> f64 {
         self.log_return
     }

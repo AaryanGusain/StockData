@@ -63,7 +63,7 @@ pub fn run(config: Config) -> CustomResult<()> {
 
                 let length = stock_vec.len();
                 for i in 0..(length - 1) {
-                    if stock_vec[i].get_close() <= stock_vec[i + 1].get_close() {
+                    if stock_vec[i].get_price() <= stock_vec[i + 1].get_price() {
                         stock_vec[i].set_tomorrow(Tomorrow::Increase);
                     } else {
                         stock_vec[i].set_tomorrow(Tomorrow::Decrease);

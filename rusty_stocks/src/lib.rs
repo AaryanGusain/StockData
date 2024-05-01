@@ -18,7 +18,6 @@ type CustomResult<T> = Result<T, Box<dyn Error>>;
 #[derive(Debug)]
 pub struct Config {
     files: Vec<String>,
-    days: usize,
 }
 
 /*
@@ -153,15 +152,6 @@ pub fn get_args() -> CustomResult<Config> {
                 .default_value("-")
                 .num_args(1..),
         )
-        .arg(
-            Arg::new("number_days")
-                .short('n')
-                .long("days")
-                .value_name("DAYS")
-                .help("Number of days to predict")
-                .num_args(1)
-                .default_value("10"),
-        )
         .get_matches();
 
     let files_vec: Vec<String> = matches.remove_many("files").unwrap().collect();
@@ -181,8 +171,5 @@ pub fn get_args() -> CustomResult<Config> {
         }
     }
 
-    Ok(Config {
-        files: files_vec,
-        days: number_days,
-    })
+    Ok(Config { files: files_vec })
 }

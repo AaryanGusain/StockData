@@ -3,6 +3,7 @@ use rand::seq::SliceRandom;
 use randomforest::criterion::Gini;
 use randomforest::table::{Table, TableBuilder};
 use randomforest::{RandomForestClassifier, RandomForestClassifierOptions};
+use statrs::distribution::Normal;
 
 /*
     Constructs a randomforest crate TableBuilder which holds the stock data from
@@ -121,3 +122,5 @@ pub fn calculate_drift(stocks: &Vec<Stock>) -> (f64, f64) {
 
     (mean - (0.5 * var), var)
 }
+
+pub fn calculate_daily_returns(stocks: &Vec<Stock>) -> Vec<Vec<f64>> {}

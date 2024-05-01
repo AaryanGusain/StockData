@@ -1,4 +1,4 @@
-use crate::stock::{self, Stock};
+use crate::stock::Stock;
 use rand::seq::SliceRandom;
 use randomforest::criterion::Gini;
 use randomforest::table::{Table, TableBuilder};

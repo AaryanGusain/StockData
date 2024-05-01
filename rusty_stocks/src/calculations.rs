@@ -100,7 +100,7 @@ pub fn run_forest(stocks: &[Stock]) -> (f64, f32) {
 /*
     Calculates the drift for Brownian motion
 
-    @param (stocks: &Vec<Stock>) vector of stock object
+    @param (stocks: &Vec<Stock>) vector of stock objects
 
     @return (f64, f64, f64) the calculated drift and variance respectively
 */
@@ -124,6 +124,13 @@ pub fn calculate_drift(stocks: &Vec<Stock>) -> (f64, f64) {
     (mean - (0.5 * var), var)
 }
 
+/*
+    Calculate the daily returns matrix which uses logarithmic daily returns to find the change in a specific stock
+
+    @param (stocks: &Vec<Stock>) vector of stock objects
+
+    @return (Vec<Vec<f64>>) daily return matrix with the coefficients to be used in Black-Scholes
+*/
 pub fn calculate_daily_returns(stocks: &Vec<Stock>) -> Vec<Vec<f64>> {
     let (drift, var) = calculate_drift(stocks);
 
@@ -149,6 +156,9 @@ pub fn calculate_daily_returns(stocks: &Vec<Stock>) -> Vec<Vec<f64>> {
     daily_returns
 }
 
+/*
+
+*/
 pub fn calculate_price_paths(stocks: &Vec<Stock>) -> Vec<Vec<f64>> {
     let daily_returns = calculate_daily_returns(stocks);
 

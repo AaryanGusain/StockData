@@ -70,17 +70,31 @@ pub fn run(config: Config) -> CustomResult<()> {
                     }
                 }
 
-                let (result, accuracy) = run_forest(stock_vec);
+                let mut num_inc: i32 = 0;
+                let mut num_dec: i32 = 0;
+                let mut avg_acc = 0.0;
 
-                if result == 1.0 {
+                for _ in 0..10 {
+                    let (res, accuracy) = run_forest(&stock_vec);
+
+                    if res == 1.0 {
+                        num_inc += 1;
+                    } else {
+                        num_dec += 1;
+                    }
+
+                    avg_acc += accuracy;
+                }
+
+                if num_inc >= num_dec {
                     println!(
-                        "The stock is predicted to increase with an accuracy of {}!",
-                        accuracy
+                        "The stock is predicted to increase with an accuracy of {}%!",
+                        avg_acc * 10.0
                     );
                 } else {
                     println!(
                         "The stock is predicted to decrease with an accuracy of {}!",
-                        accuracy
+                        avg_acc * 10.0
                     );
                 }
             }

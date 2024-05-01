@@ -56,7 +56,7 @@ pub fn split_data(stocks: &[Stock], training: f32) -> (Vec<Stock>, Vec<Stock>) {
 
     @return (f64, f32) the predicted result and accuracy respectively
 */
-pub fn run_forest(stocks: Vec<Stock>) -> (f64, f32) {
+pub fn run_forest(stocks: &[Stock]) -> (f64, f32) {
     let ultimo: Stock = stocks[stocks.len() - 1].clone();
     let dataset: Vec<Stock> = stocks[0..stocks.len() - 1].to_vec();
 
@@ -66,9 +66,7 @@ pub fn run_forest(stocks: Vec<Stock>) -> (f64, f32) {
 
     let table: Table = table_builder.build().unwrap();
 
-    let classifier: RandomForestClassifier = RandomForestClassifierOptions::new()
-        .trees(NonZeroUsize::new(300).unwrap())
-        .fit(Gini, table);
+    let classifier: RandomForestClassifier = RandomForestClassifierOptions::new().fit(Gini, table);
 
     let num_tests: f32 = test_set.len() as f32;
     let mut num_correct: f32 = 0.0;

@@ -1,10 +1,10 @@
 use crate::stock::Stock;
-use rand::distributions::{Distribution, Uniform};
+use rand::distributions::Distribution;
 use rand::seq::SliceRandom;
 use randomforest::criterion::Gini;
 use randomforest::table::{Table, TableBuilder};
 use randomforest::{RandomForestClassifier, RandomForestClassifierOptions};
-use statrs::distribution::{ContinuousCDF, Normal};
+use statrs::distribution::Normal;
 
 /*
     Constructs a randomforest crate TableBuilder which holds the stock data from
@@ -129,23 +129,44 @@ pub fn calculate_daily_returns(stocks: &Vec<Stock>) -> Vec<Vec<f64>> {
 
     let std: f64 = var.sqrt();
 
-    let days = 50;
-    let trials = 10000;
-
-    let normal = Normal::new(0.0, 1.0).unwrap();
-    let uniform = Uniform::new_inclusive(0.0, 1.0);
+    let days = 30;
+    let trials = 50000;
 
     let mut rng = rand::thread_rng();
 
+    let normal = Normal::new(0.0, 1.0).unwrap();
+
     let mut daily_returns: Vec<Vec<f64>> = Vec::new();
 
-    for _ in 0..trials {
+    for _ in 0..days {
         let mut z: Vec<f64> = Vec::new();
-        for _ in 0..days {
-            z.push(drift + std * (1.0 - normal.cdf(uniform.sample(&mut rng))));
+        for _ in 0..trials {
+            z.push((drift + std * normal.sample(&mut rng)).exp());
         }
         daily_returns.push(z);
     }
 
     daily_returns
+}
+
+pub fn calculate_price_paths(stocks: &Vec<Stock>) -> Vec<Vec<f64>> {
+    let daily_returns = calculate_daily_returns(stocks);
+
+    let mut price_paths: Vec<Vec<f64>> = Vec::new();
+
+    let mut first_day: Vec<f64> = Vec::new();
+    for _ in 0..daily_returns[0].len() {
+        first_day.push(stocks[stocks.len() - 1].get_price());
+    }
+    price_paths.push(first_day);
+
+    for i in 1..daily_returns.len() {
+        let mut price_path: Vec<f64> = Vec::new();
+        for j in 0..daily_returns[0].len() {
+            price_path.push(price_paths[i - 1][j] * daily_returns[i][j]);
+        }
+        price_paths.push(price_path);
+    }
+
+    price_paths
 }

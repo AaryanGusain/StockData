@@ -141,6 +141,6 @@ impl Stock {
         @param (price_yesterday: f64) price of stock from the day before
     */
     pub fn set_return(&mut self, price_yesterday: f64) {
-        self.log_return = (1.0 + ((price_yesterday + self.get_price()) / price_yesterday)).ln();
+        self.log_return = (self.get_price() / price_yesterday).ln();
     }
 }

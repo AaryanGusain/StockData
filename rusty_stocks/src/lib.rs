@@ -4,9 +4,10 @@ use std::{
     io::{self, BufRead, BufReader},
 };
 
-use clap::{parser::ValueSource, Arg, Command};
+use clap::{Arg, Command};
+use statrs::statistics::Statistics;
 
-use crate::calculations::{calculate_daily_returns, run_forest};
+use crate::calculations::{calculate_price_paths, run_forest};
 use crate::stock::Stock;
 use crate::stock::Tomorrow;
 
@@ -74,7 +75,11 @@ pub fn run(config: Config) -> CustomResult<()> {
                     stock_vec[i + 1].set_return(curr_price);
                 }
 
-                let daily_returns = calculate_daily_returns(&stock_vec);
+                let price_paths = calculate_price_paths(&stock_vec);
+
+                let predicted: f64 = price_paths[price_paths.len() - 1].clone().iter().mean();
+
+                println!("Monte Carlo methods predict a price of {}!", predicted);
 
                 let mut num_inc: i32 = 0;
                 let mut num_dec: i32 = 0;
@@ -94,12 +99,12 @@ pub fn run(config: Config) -> CustomResult<()> {
 
                 if num_inc >= num_dec {
                     println!(
-                        "The stock is predicted to increase with an accuracy of {}%!",
+                        "The Random Forest predicts an increase with a test accuracy of {}%!",
                         avg_acc * 10.0
                     );
                 } else {
                     println!(
-                        "The stock is predicted to decrease with an accuracy of {}!",
+                        "The Random Forest predicts a decrease with a test accuracy of {}!",
                         avg_acc * 10.0
                     );
                 }

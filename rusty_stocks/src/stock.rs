@@ -121,6 +121,10 @@ impl Stock {
         (self.high + self.close) / 2.0
     }
 
+    pub fn get_return(&self) -> f64 {
+        self.log_return
+    }
+
     /*
         Simple setter for tomorrow attribute used in determining the label of an already determined stock
 

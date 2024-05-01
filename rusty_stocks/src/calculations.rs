@@ -1,4 +1,4 @@
-use crate::stock::Stock;
+use crate::stock::{self, Stock};
 use rand::seq::SliceRandom;
 use randomforest::criterion::Gini;
 use randomforest::table::{Table, TableBuilder};
@@ -93,4 +93,31 @@ pub fn run_forest(stocks: &[Stock]) -> (f64, f32) {
     }
 
     (result, accuracy)
+}
+
+/*
+    Calculates the drift for Brownian motion
+
+    @param (stocks: &Vec<Stock>) vector of stock object
+
+    @return (f64, f64) the calculated drift and variance respectively
+*/
+pub fn calculate_drift(stocks: &Vec<Stock>) -> (f64, f64) {
+    let mut mean = 0.0;
+
+    for stock in stocks {
+        mean += stock.get_return();
+    }
+
+    mean /= stocks.len() as f64;
+
+    let mut var = 0.0;
+
+    for stock in stocks {
+        var += (stock.get_return() - mean).powi(2);
+    }
+
+    var /= stocks.len() as f64;
+
+    (mean - (0.5 * var), var)
 }

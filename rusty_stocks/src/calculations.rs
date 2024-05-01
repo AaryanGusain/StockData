@@ -157,7 +157,11 @@ pub fn calculate_daily_returns(stocks: &Vec<Stock>) -> Vec<Vec<f64>> {
 }
 
 /*
+    Calculate the price paths (random walks predicting prices) for the Monte Carlo trials
 
+    @param (stocks: &Vec<Stock>) vector of stock object
+
+    @return (Vec<Vec<f64>>) vector where the columns are individual random walks
 */
 pub fn calculate_price_paths(stocks: &Vec<Stock>) -> Vec<Vec<f64>> {
     let daily_returns = calculate_daily_returns(stocks);

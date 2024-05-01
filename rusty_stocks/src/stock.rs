@@ -17,6 +17,7 @@ pub struct Stock {
     adj_close: f64,
     volume: usize,
     tomorrow: Tomorrow,
+    log_return: f64,
 }
 
 impl fmt::Display for Stock {
@@ -50,6 +51,7 @@ impl Stock {
             adj_close,
             volume,
             tomorrow,
+            log_return: 0.0,
         }
     }
 
@@ -109,11 +111,32 @@ impl Stock {
     }
 
     /*
+        Simple getter to get average price of the stock
+
+        @param (&self) current stock object
+
+        @return (f64) average stock price for current stock
+    */
+    pub fn get_price(&self) -> f64 {
+        (self.high + self.close) / 2.0
+    }
+
+    /*
         Simple setter for tomorrow attribute used in determining the label of an already determined stock
 
         @param (&mut self) current stock object
     */
     pub fn set_tomorrow(&mut self, tomorrow: Tomorrow) {
         self.tomorrow = tomorrow;
+    }
+
+    /*
+        Setter function for the logarithmic return on the current stock
+
+        @param (&mut self) current stock object
+        @param (price_yesterday: f64) price of stock from the day before
+    */
+    pub fn set_return(&mut self, price_yesterday: f64) {
+        self.log_return = (1.0 + ((price_yesterday + self.get_price()) / price_yesterday)).ln();
     }
 }

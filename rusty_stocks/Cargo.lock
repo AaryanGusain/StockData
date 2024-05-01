@@ -320,7 +320,14 @@ dependencies = [
  "ndarray",
  "rand",
  "randomforest",
+ "stars",
 ]
+
+[[package]]
+name = "stars"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cb6fb3106b5d89299541e770e3b320da1d69f362d5f60442752d8c6a8ad7882d"
 
 [[package]]
 name = "strsim"

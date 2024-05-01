@@ -1,9 +1,10 @@
 use crate::stock::Stock;
+use rand::distributions::{Distribution, Uniform};
 use rand::seq::SliceRandom;
 use randomforest::criterion::Gini;
 use randomforest::table::{Table, TableBuilder};
 use randomforest::{RandomForestClassifier, RandomForestClassifierOptions};
-use statrs::distribution::Normal;
+use statrs::distribution::{ContinuousCDF, Normal};
 
 /*
     Constructs a randomforest crate TableBuilder which holds the stock data from
@@ -101,7 +102,7 @@ pub fn run_forest(stocks: &[Stock]) -> (f64, f32) {
 
     @param (stocks: &Vec<Stock>) vector of stock object
 
-    @return (f64, f64) the calculated drift and variance respectively
+    @return (f64, f64, f64) the calculated drift and variance respectively
 */
 pub fn calculate_drift(stocks: &Vec<Stock>) -> (f64, f64) {
     let mut mean = 0.0;
@@ -123,4 +124,28 @@ pub fn calculate_drift(stocks: &Vec<Stock>) -> (f64, f64) {
     (mean - (0.5 * var), var)
 }
 
-pub fn calculate_daily_returns(stocks: &Vec<Stock>) -> Vec<Vec<f64>> {}
+pub fn calculate_daily_returns(stocks: &Vec<Stock>) -> Vec<Vec<f64>> {
+    let (drift, var) = calculate_drift(stocks);
+
+    let std: f64 = var.sqrt();
+
+    let days = 50;
+    let trials = 10000;
+
+    let normal = Normal::new(0.0, 1.0).unwrap();
+    let uniform = Uniform::new_inclusive(0.0, 1.0);
+
+    let mut rng = rand::thread_rng();
+
+    let mut daily_returns: Vec<Vec<f64>> = Vec::new();
+
+    for _ in 0..trials {
+        let mut z: Vec<f64> = Vec::new();
+        for _ in 0..days {
+            z.push(drift + std * (1.0 - normal.cdf(uniform.sample(&mut rng))));
+        }
+        daily_returns.push(z);
+    }
+
+    daily_returns
+}

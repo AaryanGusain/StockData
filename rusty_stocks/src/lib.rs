@@ -6,7 +6,7 @@ use std::{
 
 use clap::{parser::ValueSource, Arg, Command};
 
-use crate::calculations::run_forest;
+use crate::calculations::{calculate_daily_returns, run_forest};
 use crate::stock::Stock;
 use crate::stock::Tomorrow;
 
@@ -73,6 +73,8 @@ pub fn run(config: Config) -> CustomResult<()> {
                     let curr_price = stock_vec[i].get_price();
                     stock_vec[i + 1].set_return(curr_price);
                 }
+
+                let daily_returns = calculate_daily_returns(&stock_vec);
 
                 let mut num_inc: i32 = 0;
                 let mut num_dec: i32 = 0;
@@ -155,21 +157,6 @@ pub fn get_args() -> CustomResult<Config> {
         .get_matches();
 
     let files_vec: Vec<String> = matches.remove_many("files").unwrap().collect();
-
-    let number_days_flag = matches!(
-        matches.value_source("number_days").unwrap(),
-        ValueSource::CommandLine
-    );
-
-    let mut number_days: usize = 10;
-    if number_days_flag {
-        let input_string: String = matches.remove_one("number_days").unwrap();
-        let input_number_days = parse_int(&input_string);
-        match input_number_days {
-            Ok(number) => number_days = number,
-            Err(e) => return Err(e).map_err(|e| format!("invalid day count -- {}", e))?,
-        }
-    }
 
     Ok(Config { files: files_vec })
 }

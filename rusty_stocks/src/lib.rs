@@ -70,6 +70,11 @@ pub fn run(config: Config) -> CustomResult<()> {
                     }
                 }
 
+                for i in 0..(length - 1) {
+                    let curr_price = stock_vec[i].get_price();
+                    stock_vec[i + 1].set_return(curr_price);
+                }
+
                 let mut num_inc: i32 = 0;
                 let mut num_dec: i32 = 0;
                 let mut avg_acc = 0.0;

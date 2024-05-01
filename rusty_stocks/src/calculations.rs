@@ -94,5 +94,3 @@ pub fn run_forest(stocks: &[Stock]) -> (f64, f32) {
 
     (result, accuracy)
 }
-
-pub fn compute_log_return(stocks: Vec<Stock>)

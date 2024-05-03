@@ -1,13 +1,14 @@
-use crate::stock::Stock;
 use rand::distributions::Distribution;
 use rand::seq::SliceRandom;
+use randomforest::{RandomForestClassifier, RandomForestClassifierOptions};
 use randomforest::criterion::Gini;
 use randomforest::table::{Table, TableBuilder};
-use randomforest::{RandomForestClassifier, RandomForestClassifierOptions};
 use statrs::distribution::Normal;
 
+use crate::stock::Stock;
+
 /*
-    Constructs a randomforest crate TableBuilder which holds the stock data from
+    Constructs a random forest crate TableBuilder which holds the stock data from
     the passed stock struct vector
 
     @param (stocks: &Vec<Stock>) vector of stock structs containing training dataset
@@ -25,7 +26,7 @@ pub fn construct_table(stocks: &Vec<Stock>) -> TableBuilder {
 }
 
 /*
-    Splits stocks into two sets, training and testing for cross reference testing
+    Splits stocks into two sets, training and testing for cross-reference testing
 
     @param (stocks: &Vec<stock>) vector of stock structs parsed from file
     @param (training: f32) fraction of dataset to be in the training set

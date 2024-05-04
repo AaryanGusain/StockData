@@ -30,6 +30,7 @@ historical data)
 will be slow, but it is not crashing, just give it a minute!
 
 ## Plotting
+Outputs a file in the project home directory with the plot
 
 cargo run plot <file path>
 
